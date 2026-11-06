@@ -1,0 +1,308 @@
+/**
+ * Design Cart SpinToWin — Admin dashboard & sections
+ * Prefix: dc-stw / design-cart-spintowin
+ *
+ * @author  Paweł Nosko
+ * @company Design Cart
+ * @website https://www.designcart.pl
+ */
+
+.dc-stw-admin-wrap {
+  margin: 0 0 0 -20px;
+  max-width: none;
+}
+
+.dc-stw-admin-wrap > h1 {
+  display: none;
+}
+
+.dc-stw-bo {
+  min-height: calc(100vh - 32px);
+  padding-bottom: 3rem;
+  background:
+    radial-gradient(ellipse 80% 50% at 10% -10%, rgba(31, 162, 140, 0.14), transparent 55%),
+    radial-gradient(ellipse 60% 40% at 95% 0%, rgba(28, 167, 202, 0.12), transparent 50%),
+    linear-gradient(180deg, #eef4f3 0%, #f1f5f9 100%);
+}
+
+.dc-stw-bo .dc-page__wrap {
+  padding-bottom: 2rem;
+}
+
+/* ─── Dashboard tiles ─── */
+.dc-stw-tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.dc-stw-tile {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem 1.35rem;
+  background: #fff;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 16px;
+  text-decoration: none;
+  color: #0f172a;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.dc-stw-tile:hover,
+.dc-stw-tile:focus {
+  transform: translateY(-3px);
+  border-color: rgba(31, 162, 140, 0.45);
+  box-shadow: 0 14px 36px rgba(31, 162, 140, 0.18);
+  color: #0f172a;
+  text-decoration: none;
+}
+
+.dc-stw-tile__icon {
+  flex-shrink: 0;
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  font-size: 22px;
+  color: #1fa28c;
+  background: linear-gradient(135deg, rgba(31, 162, 140, 0.16), rgba(28, 167, 202, 0.14));
+}
+
+.dc-stw-tile__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+  flex: 1;
+}
+
+.dc-stw-tile__title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.dc-stw-tile__desc {
+  font-size: 0.86rem;
+  color: #64748b;
+  line-height: 1.35;
+}
+
+.dc-stw-tile__arrow {
+  color: #94a3b8;
+  font-size: 1.25rem;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.dc-stw-tile:hover .dc-stw-tile__arrow {
+  color: #1fa28c;
+  transform: translateX(3px);
+}
+
+.dc-stw-dash-intro {
+  margin-bottom: 1.25rem;
+}
+
+.dc-stw-placeholder {
+  margin: 1rem 0 0;
+  padding: 1rem 1.15rem;
+  border-radius: 12px;
+  background: #f8fafc;
+  border: 1px dashed rgba(15, 23, 42, 0.12);
+  color: #64748b;
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
+.dc-stw-notice {
+  margin: 1rem 1.5rem 0 !important;
+  max-width: 1320px;
+}
+
+/* ─── Lang switch ─── */
+.dc-stw-langbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.dc-stw-lang-field.is-hidden {
+  display: none;
+}
+
+/* ─── Coupon tiles ─── */
+.dc-stw-coupon-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.85rem;
+}
+
+.dc-stw-coupon {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 1.1rem 1.15rem 1.2rem;
+  border-radius: 14px;
+  border: 2px solid rgba(15, 23, 42, 0.08);
+  background: #fff;
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  user-select: none;
+}
+
+.dc-stw-coupon__input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.dc-stw-coupon__amount {
+  font-size: 1.45rem;
+  font-weight: 900;
+  color: #0f172a;
+  letter-spacing: -0.03em;
+}
+
+.dc-stw-coupon__name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #475569;
+  line-height: 1.3;
+}
+
+.dc-stw-coupon__code {
+  font-size: 0.75rem;
+  font-family: ui-monospace, monospace;
+  color: #94a3b8;
+}
+
+.dc-stw-coupon__check {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #e2e8f0;
+  color: transparent;
+  display: grid;
+  place-items: center;
+  font-size: 13px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.dc-stw-coupon:hover {
+  border-color: rgba(31, 162, 140, 0.4);
+}
+
+.dc-stw-coupon.is-selected,
+.dc-stw-coupon:has(.dc-stw-coupon__input:checked) {
+  border-color: #1fa28c;
+  background: linear-gradient(145deg, rgba(31, 162, 140, 0.08), rgba(28, 167, 202, 0.06));
+  box-shadow: 0 10px 28px rgba(31, 162, 140, 0.16);
+}
+
+.dc-stw-coupon.is-selected .dc-stw-coupon__check,
+.dc-stw-coupon:has(.dc-stw-coupon__input:checked) .dc-stw-coupon__check {
+  background: linear-gradient(135deg, #1fa28c, #1ca7ca);
+  color: #fff;
+}
+
+.dc-stw-coupon.is-selected .dc-stw-coupon__amount,
+.dc-stw-coupon:has(.dc-stw-coupon__input:checked) .dc-stw-coupon__amount {
+  color: #0d6b5c;
+}
+
+/* ─── Emails table ─── */
+.dc-stw-export-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.dc-stw-export-count {
+  margin-left: auto;
+  color: #64748b;
+  font-size: 0.95rem;
+}
+
+.dc-btn--secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.35rem;
+  border-radius: 9999px;
+  font-weight: 700;
+  text-decoration: none;
+  border: 1px solid rgba(31, 162, 140, 0.35);
+  background: #fff;
+  color: #0d6b5c;
+}
+
+.dc-btn--secondary:hover {
+  background: rgba(31, 162, 140, 0.08);
+  color: #0d6b5c;
+  text-decoration: none;
+}
+
+.dc-stw-table-wrap {
+  overflow-x: auto;
+  border-radius: 12px;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.dc-stw-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+
+.dc-stw-table th,
+.dc-stw-table td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+}
+
+.dc-stw-table th {
+  background: #f8fafc;
+  font-weight: 700;
+  color: #334155;
+  white-space: nowrap;
+}
+
+.dc-stw-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.dc-stw-table tbody tr:hover td {
+  background: rgba(31, 162, 140, 0.04);
+}
+
+.dc-stw-table code {
+  font-size: 0.85em;
+  background: #f1f5f9;
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+}
+
+@media (max-width: 782px) {
+  .dc-stw-admin-wrap {
+    margin-left: -10px;
+  }
+}
+
+@media (max-width: 720px) {
+  .dc-stw-export-count {
+    margin-left: 0;
+    width: 100%;
+  }
+}

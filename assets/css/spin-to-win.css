@@ -1,0 +1,282 @@
+/**
+ * Design Cart SpinToWin — front (bazowane 1:1 na spin-to-win.html)
+ * Prefix: dc-stw
+ */
+
+.dc-stw__overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  display: grid;
+  place-items: center;
+  background: rgba(8, 4, 20, 0.72);
+  padding: 16px;
+  padding-top: calc(16px + env(safe-area-inset-top, 0px));
+  padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  overflow: auto;
+}
+
+.dc-stw__overlay[hidden] {
+  display: none;
+}
+
+.dc-stw__modal {
+  position: relative;
+  width: min(520px, 100%);
+  max-height: 100%;
+  background: radial-gradient(120% 70% at 50% 0%, color-mix(in srgb, var(--dc-stw-wheel-bg, #2a1259) 70%, #6a2bd1) 0%, var(--dc-stw-wheel-bg, #2a1259) 55%, #170a35 100%);
+  color: #fff;
+  border-radius: 26px;
+  padding: 22px 14px 14px;
+  text-align: center;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
+  overflow: hidden;
+}
+
+.dc-stw__title {
+  margin: 0;
+  font-size: var(--dc-stw-title-size, clamp(1.9rem, 7vw, 2.6rem));
+  font-weight: var(--dc-stw-title-weight, 900);
+  letter-spacing: 0.06em;
+  color: var(--dc-stw-title-color, #ffd54a);
+  text-transform: var(--dc-stw-title-transform, uppercase);
+  text-shadow: 0 3px 0 #b4560a, 0 8px 18px rgba(0, 0, 0, 0.45);
+  font-family: "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
+}
+
+.dc-stw__sub {
+  margin: 0.3rem 0 0;
+  color: var(--dc-stw-subtitle-color, #e6dcff);
+  font-size: var(--dc-stw-subtitle-size, 0.98rem);
+  font-weight: var(--dc-stw-subtitle-weight, 400);
+  text-transform: var(--dc-stw-subtitle-transform, none);
+  font-family: "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
+}
+
+.dc-stw__stage {
+  width: 100%;
+  aspect-ratio: 1 / 1.06;
+  margin-top: 4px;
+  touch-action: none;
+  cursor: grab;
+  user-select: none;
+}
+
+.dc-stw__stage.grabbing {
+  cursor: grabbing;
+}
+
+.dc-stw__stage.busy {
+  cursor: default;
+}
+
+.dc-stw__stage canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.dc-stw__x {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 0;
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.dc-stw__x:focus-visible,
+.dc-stw__claim:focus-visible,
+.dc-stw__email:focus-visible {
+  outline: 3px solid #ffd54a;
+  outline-offset: 3px;
+}
+
+.dc-stw__win {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(10, 4, 28, 0.55);
+  padding: 16px;
+}
+
+.dc-stw__win[hidden] {
+  display: none;
+}
+
+.dc-stw__card {
+  width: min(340px, 100%);
+  background: var(--dc-stw-claim-bg, #fff);
+  color: #2a1b4d;
+  border-radius: 22px;
+  padding: 24px 20px 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  animation: dc-stw-pop 0.45s cubic-bezier(0.2, 1.4, 0.4, 1);
+  font-family: "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
+}
+
+.dc-stw__card p {
+  margin: 0;
+}
+
+.dc-stw__lead {
+  font-weight: var(--dc-stw-win_lead-weight, 700);
+  font-size: var(--dc-stw-win_lead-size, 1.15rem);
+  color: var(--dc-stw-win_lead-color, #2a1b4d);
+  text-transform: var(--dc-stw-win_lead-transform, none);
+}
+
+.dc-stw__big {
+  font-size: var(--dc-stw-win_amount-size, 3.2rem);
+  font-weight: var(--dc-stw-win_amount-weight, 900);
+  color: var(--dc-stw-win_amount-color, #6d28d9);
+  text-transform: var(--dc-stw-win_amount-transform, none);
+  line-height: 1.1;
+  margin: 0.35rem 0 0.1rem;
+}
+
+.dc-stw__name {
+  color: var(--dc-stw-win_name-color, #5b4d7d);
+  font-size: var(--dc-stw-win_name-size, 0.95rem);
+  font-weight: var(--dc-stw-win_name-weight, 500);
+  text-transform: var(--dc-stw-win_name-transform, none);
+  margin-bottom: 1.1rem;
+}
+
+.dc-stw__claim-form {
+  display: grid;
+  gap: 0.55rem;
+  text-align: left;
+}
+
+.dc-stw__email-label {
+  font-size: var(--dc-stw-email_label-size, 0.9rem);
+  font-weight: var(--dc-stw-email_label-weight, 600);
+  color: var(--dc-stw-email_label-color, #2a1b4d);
+  text-transform: var(--dc-stw-email_label-transform, none);
+}
+
+.dc-stw__email {
+  width: 100%;
+  box-sizing: border-box;
+  font: inherit;
+  padding: 0.7rem 0.85rem;
+  border: 1px solid #d4c8ef;
+  border-radius: 12px;
+  background: #fff;
+  color: #2a1b4d;
+}
+
+.dc-stw__rodo {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  margin-top: 0.15rem;
+  cursor: pointer;
+  text-align: left;
+  font-size: 0.82rem;
+  line-height: 1.35;
+  color: #5b4d7d;
+  user-select: none;
+}
+
+.dc-stw__rodo-input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.dc-stw__rodo-box {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+  border: 2px solid #a78bfa;
+  border-radius: 5px;
+  background: #fff;
+  position: relative;
+}
+
+.dc-stw__rodo-input:checked + .dc-stw__rodo-box {
+  background: #6d28d9;
+  border-color: #6d28d9;
+}
+
+.dc-stw__rodo-input:checked + .dc-stw__rodo-box::after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 1px;
+  width: 5px;
+  height: 9px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.dc-stw__rodo-input:focus-visible + .dc-stw__rodo-box {
+  outline: 3px solid #ffd54a;
+  outline-offset: 2px;
+}
+
+.dc-stw__rodo-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.dc-stw__msg {
+  font-size: 0.88rem;
+  line-height: 1.35;
+}
+
+.dc-stw__msg.is-ok {
+  color: #15803d;
+}
+
+.dc-stw__msg.is-err {
+  color: #b91c1c;
+}
+
+.dc-stw__claim {
+  font: inherit;
+  font-weight: var(--dc-stw-claim_button-weight, 800);
+  font-size: var(--dc-stw-claim_button-size, 1rem);
+  padding: 0.75rem 1.5rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--dc-stw-claim_button-bg, #ffb703);
+  color: var(--dc-stw-claim_button-color, #2a1b4d);
+  text-transform: var(--dc-stw-claim_button-transform, none);
+  cursor: pointer;
+  margin-top: 0.25rem;
+  width: 100%;
+}
+
+.dc-stw__claim:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+
+@keyframes dc-stw-pop {
+  from {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dc-stw__card {
+    animation: none;
+  }
+}
